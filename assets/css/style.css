@@ -9,10 +9,16 @@
 .bigtxt {
     font-size: 50px;
 }
+.mdtxt{
+    font-size: 30px;
+}
 .quote {
     padding-left: 3%;
 }
 body {
     background-color: black;
     color: white;
+}
+.qtxt {
+    font-size: 40px;
 }

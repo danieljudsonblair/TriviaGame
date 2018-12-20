@@ -1,7 +1,7 @@
 var game = {
-    question: ["1", "2", "3"],
-    rAns: ["1", "2", "3"],
-    wAns: [["1a", "1b", "1c"], ["2a", "2b", "2c"], ["3a", "3b", "3c"]]
+    question: ["Who is Led Zeppelin's drummer?", "2", "3"],
+    rAns: ["John Bonham", "2", "3", "4"],
+    wAns: [["Keith Moon", "Bill Ward", "Ginger Baker"], ["2a", "2b", "2c"], ["3a", "3b", "3c"]]
 
 }
 
@@ -19,7 +19,10 @@ if (firstPage === true) {
         page++;
         $(".first").remove();
         $(".question").show();
-    } 
+        $("#pg").text(page);
+        $(".gametimer").text("Time Remaining: " + "Seconds");
+        $(".q").text(game.question[page - 1]);
+    }
 };
 
 
