@@ -1,0 +1,18 @@
+
+.imgctr { 
+    margin: 5% auto .5% auto;
+    text-align: center;
+}
+.txtctr {
+    text-align: center;
+}
+.bigtxt {
+    font-size: 50px;
+}
+.quote {
+    padding-left: 3%;
+}
+body {
+    background-color: black;
+    color: white;
+}
