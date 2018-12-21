@@ -9,106 +9,95 @@ var game = {
 
 }
 
-
-
-
-
-
-
-//  The stop function
 function stop() {
-
-    //  Clears our intervalId
-    //  We just pass the name of the interval
-    //  to the clearInterval function.
     clearInterval(intervalId);
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+var clicked = false;
 var intervalId;
-var qsec = 10;
+var qsec = 5;
 var qnum = 0;
 var cScore = 0;
 var iScore = 0;
 // set up a keyup function to advance from our opening page
 var firstPage = true;
+var lastPage = false;
 if (firstPage === true) {
     // hide all pages to come after the opening page
     $(".question").hide();
     $(".rans").hide();
     $(".wans").hide();
     $(".final").hide();
-    firstPage = false;
+
 }
+
 document.onkeyup = function () {
+    nextQ();
+    firstPage = false;
+    lastPage = false;
+}
+
+function nextQ() {
     $(".first").remove();
     $(".question").show();
+    clicked = false;
     qnum++;
-    console.log(qnum);
-    if (qnum > game.question.length) {
-        qnum = game.question.length;
-    }
+    qsec = 5;
 
     $("#pg").text(qnum);
-
     $(".q").text(game.question[qnum - 1]);
 
     for (i = 0; i < game.wAns[[qnum - 1]].length; i++) {
         $(".wa" + i).text(game.wAns[qnum - 1][i]);
     }
     qrun();
-
 }
+
 function qrun() {
     clearInterval(intervalId);
     intervalId = setInterval(decrement, 1000);
 }
+
 function decrement() {
     /// condition if time runs out
     qsec--;
     $("#gametimer").html("Time Remaining: " + qsec + " Seconds");
-    if (qsec === 0) {
+    if (qsec === 0 && clicked === false) {
         $(".q").text("Time's Up!! The Correct Answer is " + game.rAns[qnum - 1]);
         stop();
         iScore++;
-        qnum++
+        setTimeout(nextQ, 2000);
+
         //////////////////////////////////////////////////////////////////////////////////////////////////    
     }
     // condition if correct answer chosen
     $(".qbx").on("click", function () {
-        if ($(this).text() === game.rAns[qnum - 1]) {
-            $(".q").text("Correct!!");
-            cScore++;
+        if (clicked === false) {
+            if ($(this).text() === game.rAns[qnum - 1]) {
+                $(".q").text("Correct!!");
+                cScore++;
+                clicked = true;
+                setTimeout(nextQ, 2000);
+                stop();
 
 
-        } else if ($(this).text() !== game.rAns[qnum - 1]) {
-            $(".q").text("Sorry! The Correct Answer is " + game.rAns[qnum - 1]);
-            iScore++;
 
+            } else if ($(this).text() !== game.rAns[qnum - 1]) {
+                $(".q").text("Sorry! The Correct Answer is " + game.rAns[qnum - 1]);
+                iScore++;
+                clicked = true;
+                setTimeout(nextQ, 2000);
+                stop();
+
+
+
+            }
 
         }
-
     });
-
 }
+
+
 
 
 
