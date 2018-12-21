@@ -9,8 +9,42 @@ var game = {
 
 }
 
-// set up a variable to increment/keep track of our "pages"
-// var page = 0;
+
+
+
+
+
+
+//  The stop function
+function stop() {
+
+    //  Clears our intervalId
+    //  We just pass the name of the interval
+    //  to the clearInterval function.
+    clearInterval(intervalId);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var intervalId;
+var qsec = 10;
 var qnum = 0;
 var cScore = 0;
 var iScore = 0;
@@ -22,36 +56,68 @@ if (firstPage === true) {
     $(".rans").hide();
     $(".wans").hide();
     $(".final").hide();
+    firstPage = false;
 }
-    document.onkeyup = function () {
- 
-        qnum++;
-        $(".first").remove();
-        $(".question").show();
-        if (qnum > game.question.length) {
-            qnum = game.question.length;
-        }
-        $("#pg").text(qnum);
-        $(".gametimer").text("Time Remaining: " + "Seconds");
-        $(".q").text(game.question[qnum - 1]);
-
-        for (i = 0; i < game.wAns[[qnum - 1]].length; i++) {
-            $(".wa" + i).text(game.wAns[qnum - 1][i]);
-        }
-
-        $(".qbx").on("click", function () {
-            if ($(this).text() === game.rAns[qnum - 1]) {
-                $(".q").text("Correct!!");
-                cScore++;
-            } else if ($(this).text() !== game.rAns[qnum - 1]) {
-                $(".q").text("Sorry! The Correct Answer is " + game.rAns[qnum - 1]);
-                iScore++;
-            }
-
-        });
-
-     
+document.onkeyup = function () {
+    $(".first").remove();
+    $(".question").show();
+    qnum++;
+    console.log(qnum);
+    if (qnum > game.question.length) {
+        qnum = game.question.length;
     }
+
+    $("#pg").text(qnum);
+
+    $(".q").text(game.question[qnum - 1]);
+
+    for (i = 0; i < game.wAns[[qnum - 1]].length; i++) {
+        $(".wa" + i).text(game.wAns[qnum - 1][i]);
+    }
+    qrun();
+
+}
+function qrun() {
+    clearInterval(intervalId);
+    intervalId = setInterval(decrement, 1000);
+}
+function decrement() {
+    /// condition if time runs out
+    qsec--;
+    $("#gametimer").html("Time Remaining: " + qsec + " Seconds");
+    if (qsec === 0) {
+        $(".q").text("Time's Up!! The Correct Answer is " + game.rAns[qnum - 1]);
+        stop();
+        iScore++;
+        qnum++
+        //////////////////////////////////////////////////////////////////////////////////////////////////    
+    }
+    // condition if correct answer chosen
+    $(".qbx").on("click", function () {
+        if ($(this).text() === game.rAns[qnum - 1]) {
+            $(".q").text("Correct!!");
+            cScore++;
+
+
+        } else if ($(this).text() !== game.rAns[qnum - 1]) {
+            $(".q").text("Sorry! The Correct Answer is " + game.rAns[qnum - 1]);
+            iScore++;
+
+
+        }
+
+    });
+
+}
+
+
+
+
+
+
+
+
+
 
 
 
